@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ryzokuken/local/issues"
   },
-  "homepage": "https://github.com/ryzokuken/local#readme"
+  "homepage": "https://github.com/ryzokuken/local#readme",
+  "dependencies": {
+    "env-paths": "^3.0.0"
+  }
 }
