@@ -20,5 +20,8 @@
     "@js-temporal/polyfill": "^0.2.0",
     "env-paths": "^3.0.0",
     "ical": "^0.8.0"
+  },
+  "devDependencies": {
+    "electron": "^15.3.0"
   }
 }
