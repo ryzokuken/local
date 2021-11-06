@@ -4,6 +4,7 @@ import util from "util"
 
 import envPaths from "env-paths"
 import ical from "ical"
+import { Temporal, toTemporalInstant } from "@js-temporal/polyfill"
 
 const paths = envPaths("local")
 
@@ -33,11 +34,36 @@ class Calendar {
         this.events = []
         for (const file of files) {
             if (!file.endsWith(".ics")) continue
-            const event = ical.parseFile(path.join(dir, file))
-            console.log(event)
-            this.events.push(event)
+            const parsed = ical.parseFile(path.join(dir, file))
+            for (const item in parsed) {
+                this.events.push(processItem(parsed[item]))
+            }
         }
     }
+}
+
+function processItem(item) {
+    switch (item.type) {
+        case "VEVENT":
+            return new Event(item)
+    }
+}
+
+class Event {
+    constructor(event) {
+        this.raw = event
+        this.start = processDate(event.start)
+        this.end = processDate(event.end)
+        this.uid = event.uid
+        this.summary = event.summary
+    }
+}
+
+function processDate(date) {
+    const timeZone = date.tz
+    return toTemporalInstant
+        .call(date)
+        .toZonedDateTimeISO(timeZone || "Etc/UTC")
 }
 
 const config = JSON.parse(
@@ -48,3 +74,4 @@ const accountPaths = config.accounts
 for (const account in accountPaths) {
     accounts.push(new Account(accountPaths[account], account))
 }
+console.log(util.inspect(accounts, { depth: 5 }))
