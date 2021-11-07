@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +20,7 @@
   "dependencies": {
     "@js-temporal/polyfill": "^0.2.0",
     "env-paths": "^3.0.0",
+    "fix-esm": "^1.0.1",
     "ical": "^0.8.0"
   },
   "devDependencies": {

@@ -1,10 +1,11 @@
-import path from "path"
-import fs from "fs"
-import util from "util"
+const path = require("path")
+const fs = require("fs")
+const util = require("util")
 
-import envPaths from "env-paths"
-import ical from "ical"
-import { Temporal, toTemporalInstant } from "@js-temporal/polyfill"
+const envPaths = require("fix-esm").require("env-paths").default
+const ical = require("ical")
+const { Temporal, toTemporalInstant } = require("@js-temporal/polyfill")
+const { app, BrowserWindow } = require("electron")
 
 const paths = envPaths("local")
 
@@ -75,3 +76,15 @@ for (const account in accountPaths) {
     accounts.push(new Account(accountPaths[account], account))
 }
 console.log(util.inspect(accounts, { depth: 5 }))
+
+function createWindow() {
+    const win = new BrowserWindow({
+        width: 800,
+        height: 600,
+    })
+    win.loadFile("index.html")
+}
+
+app.whenReady().then(() => {
+    createWindow()
+})
